@@ -63,10 +63,12 @@
         for (NSDictionary *dictionary in moviesArray) {
             dispatch_group_enter(group);
             Movie *movieInitialized = [movie initWithDictionary:dictionary];
-            NSString *escapedPath = [movie.imageURLString stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
-            NSURL *imageURL = [NSURL URLWithString:@"http://wallpaper-gallery.net/single/monkey-pic/monkey-pic-23.html"];
+            NSURL *imageURL = [NSURL URLWithString:[movieInitialized imageURLString]];
+            NSURLComponents *urlComponents = [NSURLComponents componentsWithURL:imageURL resolvingAgainstBaseURL:YES];
+            NSURL *url = urlComponents.URL;
+
             NSLog(@"imageURL: %@", imageURL);
-            [[[NSURLSession sharedSession] dataTaskWithURL:imageURL completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+            [[[NSURLSession sharedSession] dataTaskWithURL:url completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
                 if (error) {
                     NSLog(@"Error: %@", error);
                 }
