@@ -11,6 +11,8 @@
 
 @interface ViewController ()
 
+@property (nonatomic, copy) NSMutableArray *moviesPlaceholder;
+
 @end
 
 @implementation ViewController
@@ -18,7 +20,10 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     MovieController *mc = [[MovieController alloc] init];
-    [mc fetchMoviesWithSearchTerm:@"Jaws" completion:nil];
+    [mc fetchMoviesWithSearchTerm:@"Jaws" completion:^(NSMutableArray *movies, NSError *error) {
+        NSMutableArray *moviesPlaceholder = movies;
+        NSLog(@"something");
+    }];
 
 }
 

@@ -71,9 +71,12 @@
             [[[NSURLSession sharedSession] dataTaskWithURL:url completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
                 if (error) {
                     NSLog(@"Error: %@", error);
+                    dispatch_group_leave(group);
                 }
                 if (!data) {
                     NSLog(@"Error: No data returned from photo data task");
+                    dispatch_group_leave(group);
+
                 } else {
                     UIImage *movieImage = [[UIImage alloc] initWithData:data];
                     movieInitialized.movieImage = movieImage;
